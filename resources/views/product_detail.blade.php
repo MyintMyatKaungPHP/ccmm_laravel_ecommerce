@@ -33,51 +33,7 @@
                     </div>
                 </div>
                 <div class="w-full bg-black/10 my-16"></div>
-                <!-- mobile -->
-                <div
-                    class="border-[1px] md:hidden block border-black/10 rounded-xl py-6 px-6">
-                    <div
-                        class="inline-block px-3 py-1 bg-primary rounded-full text-white font-semibold text-sm">
-                        Hot
-                    </div>
-                    <h1 class="text-2xl mt-3 font-medium">{{$product -> name}}</h1>
-                    <a
-                        href="#description"
-                        class="mt-2 text-[16px] mb-5 line-clamp-3 text-black/70 font-medium">{{$product -> description}}</a>
-                    <div class="flex items-end mt-1 gap-2">
-                        <p class="font-bold text-2xl">{{$product -> price}} MMK</p>
-                    </div>
-                    <div class="my-8 h-[1px] w-full bg-black/20"></div>
-                    <p class="font-semibold text-lg">Product information</p>
-                    <div class="flex flex-col gap-2 mt-3">
-                        <div class="flex items-center">
-                            <p class="basis-[35%] font-semibold">Category:</p>
-                            <p class="basis-[65%] text-black/70">Clothes</p>
-                        </div>
-                        <div class="flex items-center">
-                            <p class="basis-[35%] font-semibold">Stock:</p>
 
-                            <p class="basis-[65%] text-black/70">1000</p>
-                        </div>
-                    </div>
-                    <div class="my-8 h-[1px] w-full bg-black/20"></div>
-                    <div
-                        class="flex lg:items-center lg:flex-row flex-col gap-3 mt-4 mb-2">
-                        <div class="lg:basis-[40%]">
-                            <p class="font-bold mb-2">Quantity</p>
-                            <input
-                                class="w-full border-black/10 border-2 rounded-full py-3 pl-5"
-                                type="number"
-                                value="1" />
-                        </div>
-                    </div>
-                    <button
-                        class="w-full h-full disabled:opacity-45 disabled:cursor-not-allowed text-white bg-primary rounded-full py-4 font-bold mt-3">
-                        Add to Cart
-                    </button>
-                </div>
-
-                <div class="w-full bg-black/10 my-16"></div>
             </div>
 
             <!-- desktop right aside-->
@@ -101,7 +57,7 @@
                     <div class="flex flex-col gap-2 mt-3">
                         <div class="flex items-center">
                             <p class="basis-[35%] font-semibold">Category:</p>
-                            <p class="basis-[65%] text-black/70">Clothes</p>
+                            <p class="basis-[65%] text-black/70">{{$product -> category -> name}}</p>
                         </div>
                     </div>
                     <div class="my-8 h-[1px] w-full bg-black/20"></div>

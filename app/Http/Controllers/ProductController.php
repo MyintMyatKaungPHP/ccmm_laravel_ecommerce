@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -13,9 +14,10 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::where('name', 'like', '%' . request('search') . '%')->latest()->paginate(12);
-
+        $categories = Category::all();
         return view('index')->with([
-            'products' => $products
+            'products' => $products,
+            'categories' => $categories
         ]);
     }
 
