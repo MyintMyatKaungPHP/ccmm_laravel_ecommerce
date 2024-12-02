@@ -9,6 +9,8 @@
         <p class="mt-3 font-semibold">{{$product -> name}}</p>
         <div class="flex gap-2 text-sm items-center font-semibold mt-1">
             <p class="text-primary">{{$product -> price}}</p> MMK
+
         </div>
+        <p>{{$product -> category -> name}}</p>
     </a>
 </div>
