@@ -13,7 +13,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::where('name', 'like', '%' . request('search') . '%')->latest()->paginate(12);
+        $products = Product::where('name', 'like', '%' . request('search') . '%')
+            ->when(request('category'), function ($query) {
+                $query->whereHas('category', function ($query) {
+                    $query->where('id', request('category'));
+                });
+            })
+            ->latest()
+            ->paginate(12);
         $categories = Category::all();
         return view('index')->with([
             'products' => $products,

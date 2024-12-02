@@ -24,10 +24,18 @@
                     </svg>
                     <form action="">
                         <input
+                            name="category"
+                            value="{{request('category')}}"
+                            type="hidden"
+                            class="w-full p-0 pl-2 border-none bg-transparent outline-none focus:ring-0"
+                            placeholder="Search for products" />
+                        <input
                             name="search"
+                            value="{{request('search')}}"
                             type="text"
                             class="w-full p-0 pl-2 border-none bg-transparent outline-none focus:ring-0"
                             placeholder="Search for products" />
+
                     </form>
                 </div>
                 <div>
@@ -38,10 +46,11 @@
                             <p class="text-sm hover:text-primary transition-all">All</p>
                         </div>
                         @foreach ($categories as $category)
-                        <div
+                        <a
+                            href="/?category={{$category->id}}{{request('search') ? '&search=' . request('search') : ''}}"
                             class="flex items-center cursor-pointer gap-2 py-3 px-2 border-t-[1px] border-t-black/10">
                             <p class="text-sm hover:text-primary transition-all">{{$category->name}}</p>
-                        </div>
+                        </a>
                         @endforeach
                     </div>
                 </div>
