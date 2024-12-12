@@ -4,16 +4,7 @@
         <h1 class="text-lg font-bold">Menu</h1>
         <ul class="mt-6 gap-2 font-semibold flex flex-col">
             <li>
-                <a href="/">Home</a>
-            </li>
-            <li>
-                <a href="/">Beauty</a>
-            </li>
-            <li>
-                <a href="/">Clothes</a>
-            </li>
-            <li>
-                <a href="/">Food</a>
+                <a href="{{ route('home.page') }}">Home</a>
             </li>
         </ul>
     </div>

@@ -26,7 +26,7 @@
                         <div
                             class="w-full rounded-[4px] transition-all duration-150 mb-3 hover:bg-primary">
                             <a
-                                href="/admin/products"
+                                href="{{route('admin.products.index')}}"
                                 class="relative flex items-center gap-2.5 rounded-sm py-3 px-4 font-semibold text-sm duration-300 ease-in-out">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -48,6 +48,7 @@
     <div
         class="w-full px-3 font-roboto transition-all duration-150 absolute left-0 bottom-2 bg-secondary">
         <a
+            href="{{route('logout')}}"
             class="font-bold text-md rounded-[4px] flex h-[48px] items-center cursor-pointer mb-1 pl-3 bg-[#BE1700]">
             <svg
                 width="22"

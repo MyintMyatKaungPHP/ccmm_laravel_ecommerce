@@ -8,20 +8,31 @@
                 </h1>
                 <div class="w-[10px] h-[10px] bg-primary rounded-full"></div>
             </div>
-            <form class="flex flex-col gap-5" action="/admin/products">
+            <form class="flex flex-col gap-5" action="{{route('login')}}" method="POST">
+                @csrf
+                @error('email')
+                <p class="text-red-500 text-sm mt-2">{{$message}}</p>
+                @enderror
                 <div class="flex flex-col">
                     <label class="font-semibold text-sm">Email</label>
                     <input
+                        name="email"
+                        value="{{old('email')}}"
                         class="outline-none px-4 focus:ring-0 border-[1px] border-black/10 py-4 rounded-lg focus:border-primary transition-all mt-2"
                         type="text"
                         placeholder="Enter your Email" />
+
                 </div>
                 <div class="flex flex-col">
                     <label class="font-semibold text-sm">Password</label>
                     <input
+                        name="password"
                         class="outline-none px-4 focus:ring-0 border-[1px] border-black/10 py-4 rounded-lg focus:border-primary transition-all mt-2"
                         type="password"
                         placeholder="Enter your password" />
+                    @error('password')
+                    <p class="text-red-500 text-sm mt-2">{{$message}}</p>
+                    @enderror
                 </div>
                 <button
                     type="submit"
@@ -30,7 +41,7 @@
                 </button>
                 <p class="text-sm text-center font-semibold">
                     You don't have account? Register
-                    <a class="text-primary underline" href="/register">here.</a>
+                    <a class="text-primary underline" href="{{ route('register.page') }}">here.</a>
                 </p>
             </form>
         </div>
