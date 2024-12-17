@@ -23,7 +23,7 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:products,slug',
+            'slug' => 'required|string|max:255|unique:products,slug' . $this->product->id,
             'images' => 'nullable|array', // Allow multiple images
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Each image validation
             'description' => 'nullable|string|max:1000',
