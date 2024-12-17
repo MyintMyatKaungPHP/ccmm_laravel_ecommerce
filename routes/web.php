@@ -25,11 +25,18 @@ Route::name('admin.')
     ->middleware(IsAdmin::class)
     ->prefix('admin/')
     ->group(function () {
-        // Resource routes
-        Route::resource('products', ProductController::class);
+        Route::get('/', function () {
+            return view('admin.dashboard');
+        })->name('dashboard');
 
+        // Product CRUD
+        Route::resource('products', ProductController::class);
         // Additional routes for trashed items
         Route::get('products/trashed', [ProductController::class, 'trashed'])->name('products.trashed');
         Route::put('products/{product}/restore', [ProductController::class, 'restore'])->name('products.restore');
         Route::delete('products/{product}/force-delete', [ProductController::class, 'forceDelete'])->name('products.forceDelete');
+
+
+        // Category CRUD
+        Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
     });

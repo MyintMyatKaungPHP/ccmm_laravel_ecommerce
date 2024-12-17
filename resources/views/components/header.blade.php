@@ -37,7 +37,7 @@
                 </a>
                 @if (auth()->user()->is_admin)
                 <a
-                    href="{{ route('admin.products.index') }}"
+                    href="{{ route('admin.dashboard') }}"
                     class="px-8 py-4 font-bold rounded-lg bg-primary text-white">
                     Admin Dashboard
                 </a>

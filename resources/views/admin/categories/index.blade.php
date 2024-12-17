@@ -8,7 +8,7 @@
                     <div class="flex justify-end mb-3">
                         <a
                             class="text-sm px-4 flex items-center gap-3 shadow-md py-3 text-white bg-primary hover:bg-blue-900 font-semibold rounded-md transition-all active:animate-press"
-                            href="{{ route('admin.products.create') }}">
+                            href="{{ route('admin.categories.create') }}">
                             Create
                         </a>
                     </div>
@@ -21,20 +21,8 @@
                                         <th scope="col" class="px-6 py-3 min-w-[100px]">
                                             <span class="capitalize p-1.5"> ID </span>
                                         </th>
-
-                                        <th scope="col" class="px-6 py-3 min-w-[100px]">
-                                            <span class="capitalize p-1.5"> Preview </span>
-                                        </th>
                                         <th scope="col" class="px-6 py-3 min-w-[100px]">
                                             <span class="capitalize p-1.5"> Name </span>
-                                        </th>
-
-                                        <th scope="col" class="px-6 py-3 min-w-[100px]">
-                                            <span class="capitalize p-1.5"> Price </span>
-                                        </th>
-
-                                        <th scope="col" class="px-6 py-3 min-w-[100px]">
-                                            <span class="capitalize p-1.5"> Category </span>
                                         </th>
                                         <th scope="col" class="px-6 py-3 min-w-[100px]">
                                             <span class="capitalize p-1.5"> Actions </span>
@@ -42,42 +30,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($products as $product)
+                                    @foreach ($categories as $category)
                                     <tr class="border-b">
                                         <td class="px-6 py-4">
                                             <span class="text-darkGray p-1.5 font-semibold block">
-                                                {{ $product->id }}
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <span class="text-darkGray p-1.5 font-semibold block">
-                                                <img src="{{ asset($product->images) }}"
-                                                    alt="Product Image"
-                                                    class="w-16 h-16 object-cover rounded-md">
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4 min-w-[150px]">
-                                            <span class="text-darkGray p-1.5 font-semibold block">
-                                                {{ $product->name }}
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4 min-w-[150px]">
-                                            <span class="text-darkGray p-1.5 font-semibold block">
-                                                {{ $product->price }} MMK
+                                                {{ $category->id }}
                                             </span>
                                         </td>
 
                                         <td class="px-6 py-4 min-w-[150px]">
-                                            <span
-                                                class="text-darkGray p-1.5 font-semibold block">
-                                                {{ $product->category->name }}
+                                            <span class="text-darkGray p-1.5 font-semibold block">
+                                                {{ $category->name }}
                                             </span>
                                         </td>
                                         <td class="px-6 py-4">
                                             <div
                                                 class="space-x-3 flex items-center min-w-[200px] w-auto max-w-[500px]">
                                                 <a
-                                                    href="{{ route('admin.products.edit', $product->id) }}"
+                                                    href="{{ route('admin.categories.edit', $category->id) }}"
                                                     class="text-sm px-4 flex items-center gap-3 shadow-md py-3 text-white bg-primary hover:bg-blue-900 font-semibold rounded-md transition-all active:animate-press">
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +60,7 @@
                                                     </svg>
                                                     Edit
                                                 </a>
-                                                <form action="{{route('admin.products.destroy',$product->id)}}" method="POST">
+                                                <form action="{{route('admin.categories.destroy',$category->id)}}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button
@@ -118,7 +88,7 @@
                             </table>
                         </div>
                     </div>
-                    {{ $products->links() }}
+                    {{ $categories->links() }}
                 </div>
             </div>
         </main>

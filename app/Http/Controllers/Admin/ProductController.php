@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Category;
 use App\Models\Product;
 
 class ProductController
@@ -14,7 +15,8 @@ class ProductController
     public function index()
     {
         $products = Product::latest()->paginate(10);
-        return view('admin.products.index', compact('products'));
+        $categories = Category::all();
+        return view('admin.products.index', compact('products', 'categories'));
     }
 
     /**
@@ -22,7 +24,8 @@ class ProductController
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('admin.products.create', compact('categories'));
     }
 
     /**
@@ -30,7 +33,20 @@ class ProductController
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        // Check if an image file was uploaded
+        if ($request->hasFile('images')) {
+            // Store the uploaded file and get its path
+            $data['images'] = $request->file('images')->store('products', 'public');
+        } else {
+            // Set a default image URL/path
+            $data['images'] = 'https://via.placeholder.com/640x480.png?text=Default+Image';
+        }
+
+        Product::create($data);
+
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully!');
     }
 
     /**
@@ -46,7 +62,8 @@ class ProductController
      */
     public function edit(Product $product)
     {
-        //
+        $categories = Category::all();
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     /**
@@ -54,7 +71,24 @@ class ProductController
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        // Validate the incoming request
+        $data = $request->validated();
+
+        // Check if an image file was uploaded
+        if ($request->hasFile('images')) {
+            // Delete the old image if it exists
+            if ($product->images) {
+                \Storage::disk('public')->delete($product->images);
+            }
+
+            // Store the new uploaded file and get its path
+            $data['images'] = $request->file('images')->store('products', 'public');
+        }
+
+        // Update the product with the new data
+        $product->update($data);
+
+        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully!');
     }
 
     /**
@@ -62,7 +96,9 @@ class ProductController
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully!');
     }
 
     /**
