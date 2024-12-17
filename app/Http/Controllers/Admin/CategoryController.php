@@ -30,7 +30,10 @@ class CategoryController
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        $data = $request->validated();
+        Category::create($data);
+
+        return redirect()->route('admin.categories.index')->with('success', 'Category created successfully!');
     }
 
     /**
@@ -46,7 +49,7 @@ class CategoryController
      */
     public function edit(Category $category)
     {
-        //
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -54,7 +57,10 @@ class CategoryController
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $data = $request->validated();
+        $category->update($data);
+
+        return redirect()->route('admin.categories.index')->with('success', 'Category updated successfully!');
     }
 
     /**
@@ -62,6 +68,30 @@ class CategoryController
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully!');
+    }
+
+    public function trashed()
+    {
+        $categories = Category::onlyTrashed()->paginate(10);
+        return view('admin.categories.trashed', compact('categories'));
+    }
+
+    public function restore($id)
+    {
+        $category = Category::onlyTrashed()->findOrFail($id);
+        $category->restore();
+
+        return redirect()->route('admin.categories.trashed')->with('success', 'Category restored successfully!');
+    }
+
+    public function forceDelete($id)
+    {
+        $category = Category::onlyTrashed()->findOrFail($id);
+        $category->forceDelete();
+
+        return redirect()->route('admin.categories.trashed')->with('success', 'Category permanently deleted!');
     }
 }

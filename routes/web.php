@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PageController;
 use App\Http\Middleware\IsAdmin;
@@ -36,7 +37,9 @@ Route::name('admin.')
         Route::put('products/{product}/restore', [ProductController::class, 'restore'])->name('products.restore');
         Route::delete('products/{product}/force-delete', [ProductController::class, 'forceDelete'])->name('products.forceDelete');
 
-
         // Category CRUD
-        Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
+        Route::resource('categories', CategoryController::class);
+        Route::get('categories/trashed', [CategoryController::class, 'trashed'])->name('categories.trashed');
+        Route::patch('categories/restore/{id}', [CategoryController::class, 'restore'])->name('categories.restore');
+        Route::delete('categories/force-delete/{id}', [CategoryController::class, 'forceDelete'])->name('categories.forceDelete');
     });
