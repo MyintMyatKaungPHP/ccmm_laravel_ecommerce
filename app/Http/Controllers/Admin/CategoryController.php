@@ -68,6 +68,12 @@ class CategoryController
      */
     public function destroy(Category $category)
     {
+        // Check if the category has related products
+        // if ($category->products()->exists()) {
+        //     return redirect()->route('admin.categories.index')
+        //         ->with('error', 'Category cannot be deleted because it has related products.');
+        // }
+
         $category->delete();
 
         return redirect()->route('admin.categories.index')->with('success', 'Category deleted successfully!');

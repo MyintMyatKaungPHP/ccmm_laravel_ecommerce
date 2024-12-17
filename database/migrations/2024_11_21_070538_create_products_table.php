@@ -20,10 +20,9 @@ return new class extends Migration
             $table->decimal('price', 10, 2)->default(0);
 
             $table->foreignId('category_id')
-                ->constrained('categories')
-                ->onUpdate('cascade') // If the category ID changes, update automatically
-                ->onDelete('restrict'); // Prevent deletion if linked in products
-
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

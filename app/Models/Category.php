@@ -16,6 +16,25 @@ class Category extends Model
         'slug'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($category) {
+            if ($category->isForceDeleting()) {
+                // Hard delete related products
+                $category->products()->forceDelete();
+            } else {
+                // Soft delete related products
+                $category->products()->delete();
+            }
+        });
+
+        static::restored(function ($category) {
+            $category->products()->restore();
+        });
+    }
+
     public function products()
     {
         return $this->hasMany(Product::class);
