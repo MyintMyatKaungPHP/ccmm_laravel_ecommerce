@@ -1,5 +1,5 @@
 <div class="cursor-pointer">
-    <a href="{{route('product.detail.page', ['id' => $product -> id])}}">
+    <a href="{{route('product.detail.page', $product -> slug)}}">
         <div
             class="w-full h-auto bg-[#F7F8F9] group rounded-xl overflow-hidden">
             <img

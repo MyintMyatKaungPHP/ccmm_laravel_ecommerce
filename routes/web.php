@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\PageController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
@@ -10,8 +11,8 @@ use App\Http\Controllers\Admin\ProductController;
 
 // Web Page Route
 Route::get('/', [PageController::class, 'home'])->name('home.page');
-Route::get('category/{id}', [PageController::class, 'showProduct'])->name('show.category.products');
-Route::get('/productdetail/{id}', [PageController::class, 'showProduct'])->name('product.detail.page');
+Route::get('category/{id}', [PageController::class, 'productDetail'])->name('show.category.products');
+Route::get('/productdetail/{id}', [PageController::class, 'productDetail'])->name('product.detail.page');
 
 // Auth Route
 Route::get('/register', [PageController::class, 'register'])->name('register.page');
@@ -21,6 +22,14 @@ Route::get('/login', [PageController::class, 'login'])->name('login.page');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Cart Route
+Route::middleware(['auth'])->group(function () {
+    Route::get('cart', [CartController::class, 'index'])->name('cart.page');
+    Route::post('cart', [CartController::class, 'store'])->name('cart.store');
+    Route::put('cart/{cart}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('cart/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
+});
 
 // Admin Route
 Route::name('admin.')

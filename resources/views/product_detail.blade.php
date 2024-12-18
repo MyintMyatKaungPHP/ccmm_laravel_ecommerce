@@ -67,20 +67,28 @@
                         </div>
                     </div>
                     <div class="my-8 h-[1px] w-full bg-black/20"></div>
-                    <div
-                        class="flex lg:items-center lg:flex-row flex-col gap-3 mt-4 mb-2">
-                        <div class="lg:basis-[40%]">
-                            <p class="font-bold mb-2">Quantity</p>
-                            <input
-                                class="w-full border-black/10 border-2 rounded-full py-3 pl-5"
-                                type="number"
-                                value="1" />
+                    <form action="{{ route('cart.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}" />
+
+                        <div class="flex lg:items-center lg:flex-row flex-col gap-3 mt-4 mb-2">
+                            <div class="lg:basis-[40%]">
+                                <p class="font-bold mb-2">Quantity</p>
+                                <input
+                                    name="quantity"
+                                    class="w-full border-black/10 border-2 rounded-full py-3 pl-5"
+                                    type="number"
+                                    value="1"
+                                    min="1"
+                                    required />
+                            </div>
                         </div>
-                    </div>
-                    <button
-                        class="w-full h-full disabled:opacity-45 disabled:cursor-not-allowed text-white bg-primary rounded-full py-4 font-bold mt-3">
-                        Add to Cart
-                    </button>
+                        <button
+                            type="submit"
+                            class="w-full h-full disabled:opacity-45 disabled:cursor-not-allowed text-white bg-primary rounded-full py-4 font-bold mt-3">
+                            Add to Cart
+                        </button>
+                    </form>
                 </div>
                 <div class="mt-12">
                     <div class="flex items-center justify-between mb-7">
@@ -101,9 +109,9 @@
                                         class="text-lg group-hover:text-primary transition-all duration-200 font-semibold">
                                         {{$related_product -> name}}
                                     </p>
-                                    <div class="flex items-center gap-2">
-                                        <p class="font-bold">{{$related_product -> price}} MMK</p>
-                                    </div>
+                                    <p>
+                                        <span class="text-sm">{{$related_product -> price}} MMK</span>
+                                    </p>
                                     <p class="text-sm text-black/50">{{$related_product -> category -> name}}</p>
                                 </div>
                             </div>

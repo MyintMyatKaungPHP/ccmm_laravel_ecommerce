@@ -25,14 +25,19 @@ class Product extends Model
 
     public function scopeFilter($query, array $filters)
     {
+        // Search filter
         $query->when($filters['search'] ?? false, function ($query, $search) {
             $query->where('name', 'like', '%' . $search . '%');
         });
-        $query->when($filters['category'] ?? false, function ($query, $category) {
-            $query->whereHas('category', function ($query) use ($category) {
-                $query->where('id', $category);
+
+        // Category filter by slug
+        $query->when($filters['category'] ?? false, function ($query, $categorySlug) {
+            $query->whereHas('category', function ($query) use ($categorySlug) {
+                $query->where('slug', $categorySlug); // filter by category slug
             });
         });
+
+        return $query;
     }
 
     public function cart()

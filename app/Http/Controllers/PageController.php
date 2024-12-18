@@ -22,11 +22,23 @@ class PageController extends Controller
     }
 
     // Product Detail Page
-    public function showProduct(string $id)
+    public function productDetail(string $slug)
     {
-        $product = Product::find($id);
-        $related_products = Product::where('category_id', $product->category_id)->inRandomOrder()->limit(4)->get();
+        // Find the product by its slug
+        $product = Product::where('slug', $slug)->first();
 
+        // Check if the product exists, if not return a 404 or appropriate response
+        if (!$product) {
+            abort(404); // or any other handling, e.g., redirect
+        }
+
+        // Fetch related products based on the same category, randomly ordered
+        $related_products = Product::where('category_id', $product->category_id)
+            ->inRandomOrder()
+            ->limit(4)
+            ->get();
+
+        // Return the view with product and related products
         return view('product_detail')->with([
             'product' => $product,
             'related_products' => $related_products
