@@ -17,10 +17,8 @@ Route::get('/productdetail/{id}', [PageController::class, 'productDetail'])->nam
 // Auth Route
 Route::get('/register', [PageController::class, 'register'])->name('register.page');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
-
 Route::get('/login', [PageController::class, 'login'])->name('login.page');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Cart Route

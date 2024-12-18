@@ -93,11 +93,11 @@
                 <div class="mt-12">
                     <div class="flex items-center justify-between mb-7">
                         <h1 class="text-2xl font-medium">Related Products</h1>
-                        <a href="{{route('home.page', ['category' => $product -> category -> id])}}" class="text-sm text-primary underline">View all</a>
+                        <a href="{{route('home.page', ['category' => $product -> category -> slug])}}" class="text-sm text-primary underline">View all</a>
                     </div>
                     <div class="flex flex-col gap-7">
                         @foreach ($related_products as $related_product)
-                        <a href="/productDetail.html">
+                        <a href="{{route('product.detail.page', $related_product -> slug)}}">
                             <div class="flex items-center gap-5 group cursor-pointer">
                                 <div class="basis-[30%] h-auto rounded-xl overflow-hidden">
                                     <img
