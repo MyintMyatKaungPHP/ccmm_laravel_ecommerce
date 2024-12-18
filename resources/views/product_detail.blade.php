@@ -33,7 +33,14 @@
                     </div>
                 </div>
                 <div class="w-full bg-black/10 my-16"></div>
-
+                <div>
+                    <h1 class="text-2xl font-semibold text-primary">Product Description:</h1>
+                    <div class="mt-4" id="description">
+                        <p class="text-lg text-black/50">
+                            {{$product -> description}}
+                        </p>
+                    </div>
+                </div>
             </div>
 
             <!-- desktop right aside-->
@@ -45,19 +52,18 @@
                         Hot
                     </div>
                     <h1 class="text-2xl mt-3 font-medium">{{$product -> name}}</h1>
-                    <a
-                        href="#description"
-                        class="mt-2 text-[16px] mb-5 text-black/70 line-clamp-3 font-medium">{{$product -> description}}</a>
-                    <div class="flex items-end mt-1 gap-2">
-                        <p class="font-bold text-2xl">{{$product -> price}} MMK</p>
 
-                    </div>
-                    <div class="my-8 h-[1px] w-full bg-black/20"></div>
-                    <p class="font-semibold text-lg">Product information</p>
+                    <div class="my-2 h-[1px] w-full"></div>
+                    <p class="font-semibold text-lg text-primary">Product information:</p>
                     <div class="flex flex-col gap-2 mt-3">
+
                         <div class="flex items-center">
                             <p class="basis-[35%] font-semibold">Category:</p>
                             <p class="basis-[65%] text-black/70">{{$product -> category -> name}}</p>
+                        </div>
+                        <div class="flex items-center">
+                            <p class="basis-[35%] font-semibold">Price:</p>
+                            <p class="basis-[65%] text-black/70">{{$product -> price}} MMK</p>
                         </div>
                     </div>
                     <div class="my-8 h-[1px] w-full bg-black/20"></div>
@@ -76,7 +82,36 @@
                         Add to Cart
                     </button>
                 </div>
+                <div class="mt-12">
+                    <div class="flex items-center justify-between mb-7">
+                        <h1 class="text-2xl font-medium">Related Products</h1>
+                        <a href="{{route('home.page', ['category' => $product -> category -> id])}}" class="text-sm text-primary underline">View all</a>
+                    </div>
+                    <div class="flex flex-col gap-7">
+                        @foreach ($related_products as $related_product)
+                        <a href="/productDetail.html">
+                            <div class="flex items-center gap-5 group cursor-pointer">
+                                <div class="basis-[30%] h-auto rounded-xl overflow-hidden">
+                                    <img
+                                        class="w-full h-full group-hover:scale-[1.1] transition-all duration-200 object-cover"
+                                        src="https://cdn.prod.website-files.com/62f51a90d298e65b94bbffcd/62f6a67c4666f047ada3ba87_image-10-shop-product-shopwave-template-p-500.png" />
+                                </div>
+                                <div class="basis-[70%]">
+                                    <p
+                                        class="text-lg group-hover:text-primary transition-all duration-200 font-semibold">
+                                        {{$related_product -> name}}
+                                    </p>
+                                    <div class="flex items-center gap-2">
+                                        <p class="font-bold">{{$related_product -> price}} MMK</p>
+                                    </div>
+                                    <p class="text-sm text-black/50">{{$related_product -> category -> name}}</p>
+                                </div>
+                            </div>
+                        </a>
+                        @endforeach
 
+                    </div>
+                </div>
             </div>
         </div>
         <div class="w-full h-[1px] bg-black/10 mt-16"></div>

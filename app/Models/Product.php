@@ -34,4 +34,9 @@ class Product extends Model
             });
         });
     }
+
+    public function cart()
+    {
+        return $this->belongsToMany(User::class, 'carts')->withPivot('quantity')->withTimestamps();
+    }
 }

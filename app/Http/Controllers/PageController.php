@@ -24,10 +24,12 @@ class PageController extends Controller
     // Product Detail Page
     public function showProduct(string $id)
     {
-
         $product = Product::find($id);
+        $related_products = Product::where('category_id', $product->category_id)->inRandomOrder()->limit(4)->get();
+
         return view('product_detail')->with([
-            'product' => $product
+            'product' => $product,
+            'related_products' => $related_products
         ]);
     }
 
