@@ -15,12 +15,12 @@
                     <td class="px-6 py-4">{{ $category->id }}</td>
                     <td class="px-6 py-4">{{ $category->name }}</td>
                     <td class="px-6 py-4 flex space-x-2">
-                        <form method="POST" action="{{ route('categories.restore', $category->id) }}">
+                        <form method="POST" action="{{ route('admin.categories.restore', $category->id) }}">
                             @csrf
                             @method('PATCH')
                             <button type="submit" class="text-blue-500">Restore</button>
                         </form>
-                        <form method="POST" action="{{ route('categories.forceDelete', $category->id) }}">
+                        <form method="POST" action="{{ route('admin.categories.forceDelete', $category->id) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-500">Delete Permanently</button>
