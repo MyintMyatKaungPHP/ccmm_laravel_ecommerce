@@ -17,6 +17,7 @@
                     class="px-8 py-4 font-bold rounded-lg bg-red-500 text-white">
                     Logout
                 </a>
+                <a href="{{ route('orders.page') }}" class="px-8 py-4 font-bold rounded-lg text-primary border-2 border-primary">My Orders</a>
                 @if (auth()->user()->is_admin)
                 <a
                     href="{{ route('admin.dashboard') }}"

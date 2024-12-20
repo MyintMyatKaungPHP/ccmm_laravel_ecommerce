@@ -8,6 +8,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\OrderController;
 
 // Web Page Route
 Route::get('/', [PageController::class, 'home'])->name('home.page');
@@ -21,13 +22,53 @@ Route::get('/login', [PageController::class, 'login'])->name('login.page');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Cart Route
+// Auth Check Routes
 Route::middleware(['auth'])->group(function () {
-    Route::get('cart', [CartController::class, 'index'])->name('cart.page');
-    Route::post('cart', [CartController::class, 'store'])->name('cart.store');
-    Route::put('cart/{cart}', [CartController::class, 'update'])->name('cart.update');
-    Route::delete('cart/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
+    // Cart Routes
+    Route::prefix('cart')->name('cart.')->group(function () {
+        // Display the cart page
+        Route::get('/', [CartController::class, 'index'])->name('page');
+
+        // Store a new item in the cart
+        Route::post('/', [CartController::class, 'store'])->name('store');
+
+        // Update an item in the cart
+        Route::put('{cart}', [CartController::class, 'update'])->name('update');
+
+        // Remove an item from the cart
+        Route::delete('{cart}', [CartController::class, 'destroy'])->name('destroy');
+    });
+
+    // Order Routes
+    Route::prefix('orders')->name('orders.')->group(function () {
+        // Route::get('trashed', [OrderController::class, 'trashed'])->name('trashed');
+        // Route::patch('restore/{order}', [OrderController::class, 'restore'])->name('restore');
+        // Route::delete('force-delete/{order}', [OrderController::class, 'forceDelete'])->name('forceDelete');
+
+        // Show all orders
+        Route::get('/', [OrderController::class, 'orders'])->name('page');
+
+        // // Show form to create a new order
+        // Route::get('create', [OrderController::class, 'create'])->name('create');
+
+        // Store a new order
+        Route::post('/', [OrderController::class, 'store'])->name('store');
+
+        // // Show a single order
+        // Route::get('{order}', [OrderController::class, 'show'])->name('show');
+
+        // // Show the form to edit an existing order
+        // Route::get('{order}/edit', [OrderController::class, 'edit'])->name('edit');
+
+        // // Update an existing order
+        // Route::put('{order}', [OrderController::class, 'update'])->name('update');
+
+        // // Delete an order
+        // Route::delete('{order}', [OrderController::class, 'destroy'])->name('destroy');
+    });
 });
+
+
 
 // Admin Route
 Route::name('admin.')
@@ -38,46 +79,27 @@ Route::name('admin.')
             return view('admin.dashboard');
         })->name('dashboard');
 
-        // // User CRUD
-        // Route::resource('users', UserController::class);
-        // Route::get('users/trashed', [UserController::class, 'trashed'])->name('users.trashed');
-        // Route::put('users/{user}/restore', [UserController::class, 'restore'])->name('users.restore');
-        // Route::delete('users/{user}/force-delete', [UserController::class, 'forceDelete'])->name('users.forceDelete');
-
-        // // Product CRUD
-        // Route::resource('products', ProductController::class);
-        // // Additional routes for trashed items
-        // Route::get('products/trashed', [ProductController::class, 'trashed'])->name('products.trashed');
-        // Route::put('products/{product}/restore', [ProductController::class, 'restore'])->name('products.restore');
-        // Route::delete('products/{product}/force-delete', [ProductController::class, 'forceDelete'])->name('products.forceDelete');
-
-        // // Category CRUD
-        // Route::resource('categories', CategoryController::class);
-        // Route::get('categories/trashed', [CategoryController::class, 'trashed'])->name('categories.trashed');
-        // Route::patch('categories/restore/{id}', [CategoryController::class, 'restore'])->name('categories.restore');
-        // Route::delete('categories/force-delete/{id}', [CategoryController::class, 'forceDelete'])->name('categories.forceDelete');
-
-        // Prefix for Users
-        Route::prefix('users')->name('users.')->group(function () {
-            Route::resource('/', UserController::class);
-            Route::get('trashed', [UserController::class, 'trashed'])->name('trashed');
-            Route::put('{user}/restore', [UserController::class, 'restore'])->name('restore');
-            Route::delete('{user}/force-delete', [UserController::class, 'forceDelete'])->name('forceDelete');
-        });
-
-        // Prefix for Products
-        Route::prefix('products')->name('products.')->group(function () {
-            Route::resource('/', ProductController::class);
-            Route::get('trashed', [ProductController::class, 'trashed'])->name('trashed');
-            Route::put('{product}/restore', [ProductController::class, 'restore'])->name('restore');
-            Route::delete('{product}/force-delete', [ProductController::class, 'forceDelete'])->name('forceDelete');
-        });
-
-        // Prefix for Categories
+        // Categories CRUD
         Route::prefix('categories')->name('categories.')->group(function () {
-            Route::resource('/', CategoryController::class);
             Route::get('trashed', [CategoryController::class, 'trashed'])->name('trashed');
             Route::patch('restore/{id}', [CategoryController::class, 'restore'])->name('restore');
             Route::delete('force-delete/{id}', [CategoryController::class, 'forceDelete'])->name('forceDelete');
+            Route::resource('/', CategoryController::class)->parameters(['' => 'category']);
+        });
+
+        // Users CRUD
+        Route::prefix('users')->name('users.')->group(function () {
+            Route::get('trashed', [UserController::class, 'trashed'])->name('trashed');
+            Route::put('{user}/restore', [UserController::class, 'restore'])->name('restore');
+            Route::delete('{user}/force-delete', [UserController::class, 'forceDelete'])->name('forceDelete');
+            Route::resource('/', UserController::class);
+        });
+
+        // Products CURD
+        Route::prefix('products')->name('products.')->group(function () {
+            Route::get('trashed', [ProductController::class, 'trashed'])->name('trashed');
+            Route::put('{product}/restore', [ProductController::class, 'restore'])->name('restore');
+            Route::delete('{product}/force-delete', [ProductController::class, 'forceDelete'])->name('forceDelete');
+            Route::resource('/', ProductController::class);
         });
     });

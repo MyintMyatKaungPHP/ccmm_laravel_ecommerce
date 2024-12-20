@@ -2,86 +2,79 @@
     <div
         class="flex lg:flex-row flex-col gap-5 xl:px-32 sm:px-5 px-2 mt-10 mb-10">
         <div class="basis-[60%]">
-            <h1 class="font-bold text-2xl">Billing Details</h1>
+            <h1 class="font-bold text-2xl">Order Delivery Information</h1>
             <div class="mt-6 border-[1px] border-black/10 px-6 pt-8 pb-8">
-                <form class="md:grid md:grid-cols-2 flex flex-col gap-4">
+                @if ($carts->isEmpty())
+                <p class="text-center text-black/50 mt-4">No items selected.</p>
+                <p class="text-center text-black/50 mt-4"><a href="{{ route('home.page') }}" class="text-center text-primary mt-4">See all products</a></p>
+                @else
+                <form class="md:grid md:grid-cols-2 flex flex-col gap-4" action="{{ route('orders.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="md:col-span-2 flex flex-col justify-center">
                         <label class="font-semibold text-sm">Name</label>
                         <input
                             class="md:col-span-2 outline-none px-3 focus:ring-0 border-[1px] border-black/10 py-4 rounded-lg focus:border-primary transition-all mt-2"
-                            placeholder="Enter your name" />
-                    </div>
-                    <div class="md:col-span-2 flex flex-col justify-center">
-                        <label class="font-semibold text-sm">Phone</label>
-                        <input
-                            class="outline-none focus:ring-0 px-3 border-[1px] border-black/10 py-4 rounded-lg focus:border-primary transition-all mt-2"
-                            placeholder="Enter your mobile phone number" />
+                            value="{{ auth()->user()->name }}" readonly />
                     </div>
                     <div class="md:col-span-2 flex flex-col justify-center">
                         <label class="font-semibold text-sm">Email</label>
                         <input
                             class="outline-none focus:ring-0 px-3 border-[1px] border-black/10 py-4 rounded-lg focus:border-primary transition-all mt-2"
-                            placeholder="Enter your email address"
-                            type="email" />
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="font-semibold text-sm">Town / City</label>
-                        <select
-                            class="w-full border-[1px] mt-2 px-3 border-black/20 focus:border-primary transition-all py-3 rounded-lg">
-                            <option>BoTaHtaung</option>
-                            <option>Insein</option>
-                            <option>Hlegu</option>
-                            <option>Yankin</option>
-                        </select>
+                            value="{{ auth()->user()->email }}" readonly />
                     </div>
                     <div class="md:col-span-2 flex flex-col justify-center">
-                        <label class="font-semibold text-sm">Shipping Address</label>
+                        <label class="font-semibold text-sm">Phone Number</label>
                         <input
-                            class="md:col-span-2 outline-none px-3 focus:ring-0 border-[1px] border-black/10 py-4 rounded-lg focus:border-primary transition-all mt-2"
-                            placeholder="Enter your shipping address" />
-                    </div>
-                    <div class="md:col-span-2 flex flex-col justify-center">
-                        <label class="font-semibold text-sm">Create Account Password</label>
-                        <input
-                            class="md:col-span-2 outline-none px-3 focus:ring-0 border-[1px] border-black/10 py-4 rounded-lg focus:border-primary transition-all mt-2"
-                            label=""
-                            placeholder="Password" />
-                    </div>
-                    <div class="md:col-span-2 flex flex-col justify-center">
-                        <label class="font-semibold text-sm">Viber</label>
-                        <input
-                            class="outline-none focus:ring-0 border-[1px] px-3 border-black/10 py-4 rounded-lg focus:border-primary transition-all mt-2"
-                            placeholder="Enter your viber Phone no or name" />
-                    </div>
-                    <div class="md:col-span-2 flex flex-col justify-center">
-                        <label class="font-semibold text-sm">Telegram</label>
-                        <input
-                            class="outline-none focus:ring-0 border-[1px] px-3 border-black/10 py-4 rounded-lg focus:border-primary transition-all mt-2"
-                            placeholder="Enter your telegram Phone no or name" />
-                    </div>
-                    <div class="md:col-span-2 flex flex-col justify-center">
-                        <label class="font-semibold text-sm">Fb Profile link</label>
-                        <input
-                            class="md:col-span-2 outline-none focus:ring-0 px-3 border-[1px] border-black/10 py-4 rounded-lg focus:border-primary transition-all mt-2"
-                            placeholder="Paste your Fackbook Profile link" />
-                    </div>
-                    <div class="md:col-span-2 flex flex-col justify-center">
-                        <label class="font-semibold text-sm">Paid ScreenShot</label>
-                        <input type="file" />
-                    </div>
-                    <div class="flex md:col-span-2 flex-col">
-                        <label class="font-semibold text-sm">Order Notes(optional)</label>
-                        <textarea
-                            rows="5"
-                            class="outline-none focus:ring-0 border-[1px] border-black/10 py-4 rounded-lg focus:border-primary transition-all mt-2"></textarea>
+                            name="phone_number"
+                            value="{{old('phone_number')}}"
+                            type="text"
+                            class="outline-none focus:ring-0 px-3 border-[1px] border-black/10 py-4 rounded-lg focus:border-primary transition-all mt-2"
+                            placeholder="Enter your mobile phone number" />
+                        @error('phone_number')
+                        <p class="text-red-500 text-sm mt-2">{{$message}}</p>
+                        @enderror
                     </div>
 
+                    <div class="flex md:col-span-2 flex-col">
+                        <label class="font-semibold text-sm">Shipping Address</label>
+                        <textarea
+                            name="shipping_address"
+                            rows="5"
+                            class="outline-none focus:ring-0 border-[1px] border-black/10 py-4 rounded-lg focus:border-primary transition-all mt-2">
+                        {{ old('shipping_address') }}
+                        </textarea>
+                        @error('shipping_address')
+                        <p class="text-red-500 text-sm mt-2">{{$message}}</p>
+                        @enderror
+                    </div>
+
+                    <div class="md:col-span-2 flex flex-col justify-center">
+                        <label class="font-semibold text-sm">Transition Screenshot</label>
+                        <input type="file" name="transition_screenshot" />
+                        @error('transition_screenshot')
+                        <p class="text-red-500 text-sm mt-2">{{$message}}</p>
+                        @enderror
+                    </div>
+                    <div class="flex md:col-span-2 flex-col">
+                        <label class="font-semibold text-sm">Order Notes (optional)</label>
+                        <textarea
+                            name="order_notes"
+                            rows="5"
+                            class="outline-none focus:ring-0 border-[1px] border-black/10 py-4 rounded-lg focus:border-primary transition-all mt-2">
+                        {{ old('order_notes') }}
+                        </textarea>
+                        @error('order_notes')
+                        <p class="text-red-500 text-sm mt-2">{{$message}}</p>
+                        @enderror
+                    </div>
                     <button
                         type="submit"
                         class="w-full h-full col-span-2 text-white bg-primary rounded-full py-4 font-bold mt-3">
-                        Confirm order
+                        Confirm Order
                     </button>
+
                 </form>
+                @endif
             </div>
         </div>
         <div class="basis-[40%]">

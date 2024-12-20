@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCartRequest;
 use App\Http\Requests\UpdateCartRequest;
 use App\Models\Cart;
-use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class CartController extends Controller
+class CartController
 {
     /**
      * Display a listing of the cart items.
