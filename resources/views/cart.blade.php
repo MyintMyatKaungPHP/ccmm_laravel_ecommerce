@@ -19,7 +19,7 @@
                     <div class="md:col-span-2 flex flex-col justify-center">
                         <label class="font-semibold text-sm">Email</label>
                         <input
-                            class="outline-none focus:ring-0 px-3 border-[1px] border-black/10 py-4 rounded-lg focus:border-primary transition-all mt-2"
+                            f class="outline-none focus:ring-0 px-3 border-[1px] border-black/10 py-4 rounded-lg focus:border-primary transition-all mt-2"
                             value="{{ auth()->user()->email }}" readonly />
                     </div>
                     <div class="md:col-span-2 flex flex-col justify-center">
@@ -50,7 +50,7 @@
 
                     <div class="md:col-span-2 flex flex-col justify-center">
                         <label class="font-semibold text-sm">Transition Screenshot</label>
-                        <input type="file" name="transition_screenshot" />
+                        <input type="file" name="transition_screenshot" value="{{old('transition_screenshot')}}" />
                         @error('transition_screenshot')
                         <p class="text-red-500 text-sm mt-2">{{$message}}</p>
                         @enderror
